@@ -1,6 +1,7 @@
 import React from 'react';
 import { deleteTodo, updateTodo, todoListUpdated$ } from '../../services/todo.service';
 import './TodoItem.css';
+import { withRouter } from 'react-router-dom';
 
 class TodoItem extends React.Component {
     constructor(props) {
@@ -12,12 +13,13 @@ class TodoItem extends React.Component {
 
     async removeTodo(){
         try {
-            await deleteTodo(this.props.todoItem._id);
+            let res = await deleteTodo(this.props.todoItem._id);
             todoListUpdated$.next(true);
 
         } catch (error) {
-            if (error.status === 401) {
-                this.router.navigate(['/login']);
+            console.error(error);
+            if (error.response.status === 403) {
+                this.props.history.push('/login');
             }
         }
     }
@@ -34,14 +36,15 @@ class TodoItem extends React.Component {
           } catch (error) {
             console.error(error);
       
-            if (error.status === 401) {
+            if (error.response.status === 403) {
+                this.props.history.push('/login');
             }
           }
     }
 
     render() {
         return (
-            <section>
+            <section className="todo-item">
                 <input className="checkbox" 
                     type="checkbox" 
                     onClick={this.checkboxChange} 
@@ -49,10 +52,10 @@ class TodoItem extends React.Component {
                     />
                 <span name="title" 
                     className={this.props.todoItem.status === 'checked' ? 'strike': ''} >{this.props.todoItem.title}</span>
-                <button className="delete" onClick={this.removeTodo} >Delete</button>
+                <button className="delete" onClick={this.removeTodo} >X</button>
             </section>
         )
     }
 }
 
-export default TodoItem;
+export default withRouter(TodoItem);

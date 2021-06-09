@@ -1,0 +1,24 @@
+.container {
+    text-align: center;
+}
+
+.todoText {
+    width: 350px;
+    max-width: 400px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+input {
+    font-size: 15px;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.error {
+    color: RED;
+    font-weight: 600;
+    font-size: 15px;
+}

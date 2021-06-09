@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoItem from '../todoItem/TodoItem';
 import { getTodos, todoListUpdated$ } from '../../services/todo.service';
+import './TodoList.css';
 
 class TodoList extends React.Component {
     constructor() {
@@ -33,9 +34,9 @@ class TodoList extends React.Component {
 
     render(){
         return(
-           <div>
-               {this.state.todoItems.map(item => <TodoItem todoItem={item} />)}
-           </div> 
+           <ul>
+               {this.state.todoItems.map(item => <li><TodoItem todoItem={item} /></li>)}
+           </ul> 
         )
     }
 }

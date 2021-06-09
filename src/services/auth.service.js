@@ -6,5 +6,5 @@ function createAutharizationHeader(){
 }
 
 export async function isValidToken() {
-    return await axios.post('http://localhost:3001/', null, createAutharizationHeader());
+    return await axios.post('http://localhost:3001/valid', null, createAutharizationHeader());
 }

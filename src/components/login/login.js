@@ -1,12 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import './login.css';
 
 class Login extends React.Component {
     constructor(){
         super();
         this.state = {
-            "username": "arnold",
-            "password": "Abc123"
+            "username": "",
+            "password": ""
         }
         this.onInputChange = this.onInputChange.bind(this);
         this.login = this.login.bind(this);
@@ -23,19 +25,21 @@ class Login extends React.Component {
             "username": this.state.username,
             "password": this.state.password
         })
-        .then(function (response) {
+        .then((response) => {
             console.log(response);
             localStorage.setItem("TodoAccessToken", response.data.accessToken);
+            this.props.history.push('/');
         })
-        .catch(function (error) {
+        .catch((error) => {
             console.log(error);
             localStorage.removeItem("TodoAccessToken");
         });
     }
 
     render() {
+
         return (
-            <section>
+            <section className="container">
                 <input type="text" 
                     name="username" 
                     onChange={this.onInputChange} 
@@ -46,10 +50,10 @@ class Login extends React.Component {
                     onChange={this.onInputChange} 
                     value={this.state.password}
                     placeholder="password" />
-                <button onClick={this.login}>Login</button>
+                <button onClick={this.login} className="login-btn">Login</button>
             </section>
         )
     }
 }
 
-export default Login;
+export default withRouter(Login);

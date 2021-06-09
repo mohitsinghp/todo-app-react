@@ -3,6 +3,7 @@ import TodoList from '../todoList/TodoList';
 import { insertTodo, todoListUpdated$ } from '../../services/todo.service';
 import { isValidToken } from '../../services/auth.service';
 import  { Redirect } from 'react-router-dom';
+import './Home.css';
 
 class Home extends Component {
     constructor() {
@@ -36,44 +37,54 @@ class Home extends Component {
 
             } catch (error) {
                 if (error.status === 401) {
-                    this.router.navigate(['/login']);
+                    
                 }
             }
         }
     }
 
-    async isAuthenticated() {
-        try {
-            if(!localStorage.getItem("TodoAccessToken")){
-                return false;
-            }
+     isAuthenticated() {
+         return localStorage.getItem("TodoAccessToken");
+        // try {
+        //     if(!localStorage.getItem("TodoAccessToken")){
+        //         return false;
+        //     }
 
-            const res = await isValidToken();
+        //     const res = await isValidToken();
 
-            if(res.data.message !== 'Valid Token') {
-                return false;
-            }
+        //     if(res.data.message !== 'Valid Token') {
+        //         return false;
+        //     }
 
-        }catch(error) {
-            console.log(error);
-            return false
-        }
+        // }catch(error) {
+        //     console.log(error);
+        //     return false
+        // }
 
         return true;
     }
 
     render() {
-        // if(!this.isAuthenticated()){
-        //     return (<Redirect to='/login'  />);
-        // }
+        if(!this.isAuthenticated()){
+            return (<Redirect to='/login'  />);
+        }
 
         return (
             <section className="container">
-                <input className="textbox" name="todoTitle" type="text" onChange={this.onInputChange}
+                <input className="todoText" name="todoTitle" type="text" onChange={this.onInputChange}
                     value={this.state.todoTitle} onKeyPress={this.onKeyPress} />
                 <TodoList />
             </section>
         )
+        
+
+        // return (
+        //     <section className="container">
+        //         <input className="textbox" name="todoTitle" type="text" onChange={this.onInputChange}
+        //             value={this.state.todoTitle} onKeyPress={this.onKeyPress} />
+        //         <TodoList />
+        //     </section>
+        // )
     }
 };
 
