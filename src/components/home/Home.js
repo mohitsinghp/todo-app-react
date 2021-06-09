@@ -43,23 +43,22 @@ class Home extends Component {
         }
     }
 
-     isAuthenticated() {
-         return localStorage.getItem("TodoAccessToken");
-        // try {
-        //     if(!localStorage.getItem("TodoAccessToken")){
-        //         return false;
-        //     }
+    async isAuthenticated() {
+        try {
+            if(!localStorage.getItem("TodoAccessToken")){
+                return false;
+            }
 
-        //     const res = await isValidToken();
+            const res = await isValidToken();
 
-        //     if(res.data.message !== 'Valid Token') {
-        //         return false;
-        //     }
+            if(res.data.message !== 'Valid Token') {
+                return false;
+            }
 
-        // }catch(error) {
-        //     console.log(error);
-        //     return false
-        // }
+        }catch(error) {
+            console.log(error);
+            return false
+        }
 
         return true;
     }
@@ -76,15 +75,6 @@ class Home extends Component {
                 <TodoList />
             </section>
         )
-        
-
-        // return (
-        //     <section className="container">
-        //         <input className="textbox" name="todoTitle" type="text" onChange={this.onInputChange}
-        //             value={this.state.todoTitle} onKeyPress={this.onKeyPress} />
-        //         <TodoList />
-        //     </section>
-        // )
     }
 };
 

@@ -19,6 +19,7 @@ class TodoItem extends React.Component {
         } catch (error) {
             console.error(error);
             if (error.response.status === 403) {
+                localStorage.removeItem('TodoAccessToken');
                 this.props.history.push('/login');
             }
         }
@@ -37,6 +38,7 @@ class TodoItem extends React.Component {
             console.error(error);
       
             if (error.response.status === 403) {
+                localStorage.removeItem('TodoAccessToken');
                 this.props.history.push('/login');
             }
           }

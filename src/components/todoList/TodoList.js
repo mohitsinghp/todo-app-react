@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoItem from '../todoItem/TodoItem';
 import { getTodos, todoListUpdated$ } from '../../services/todo.service';
+import { withRouter } from 'react-router-dom';
 import './TodoList.css';
 
 class TodoList extends React.Component {
@@ -19,7 +20,12 @@ class TodoList extends React.Component {
                 todoItems: res.data
             });
         } catch(error){
-            console.log(error);
+            console.error(error);
+      
+            if (error.response.status === 403) {
+                localStorage.removeItem('TodoAccessToken');
+                this.props.history.push('/login');
+            }
         }
     }
 
@@ -41,4 +47,4 @@ class TodoList extends React.Component {
     }
 }
 
-export default TodoList;
+export default withRouter(TodoList);
